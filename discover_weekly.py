@@ -69,7 +69,7 @@ def song_in_playlist(playlist, criterion):
 
 def sort_playlist(playlist, criterion):
     """
-    Sorts a playlist based on the given criterion.
+    Sorts a playlist based on the given criterion. Criterion can be any key (title, artist, BPM, Speechiness etc.)
 
     Args:
         playlist (TYPE): DESCRIPTION.
@@ -93,8 +93,8 @@ def sort_playlist(playlist, criterion):
     return playlist
         
 #checking if the read_dataset method works
-#songs = read_dataset('spotify-dataset.csv')
-#print(songs)
+songs = read_dataset('spotify-dataset.csv')
+print(songs)
 
 
 #checking if the sort_playlist method works
