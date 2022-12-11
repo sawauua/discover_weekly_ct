@@ -91,6 +91,16 @@ def sort_playlist(playlist, criterion):
                 playlist[j+1] = helper
                 
     return playlist
+
+def users(n, songs):
+    users = []
+    for i in range(n):
+        user_list = []
+        for j in range(random.randint(0, len(songs)-1)):
+            user_list.append(songs[random.randint(0,len(songs) - 1)]['title'])
+        users.append(user_list)
+            
+    return users
         
 #checking if the read_dataset method works
 songs = read_dataset('spotify-dataset.csv')
