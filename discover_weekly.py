@@ -48,7 +48,7 @@ def read_dataset(path):
         
     return result
 
-def song_in_playlist(playlist, criterion):
+def song_in_playlist(playlist, criterion, song):
     """
     Looks for a specifc song (by criterion) in a playlist.
 
@@ -62,10 +62,27 @@ def song_in_playlist(playlist, criterion):
     """
     #sort based on criterion
     playlist = sort_playlist(playlist, criterion)
-    #binary serach through a sorted playlist
-    upper_bound = len(playlist)
     
-    return None
+    #binary serach through a sorted playlist
+    upper_bound = len(playlist) - 1
+    lower_bound = 0
+    
+    while lower_bound <= upper_bound:
+        mid = int((upper_bound + lower_bound) / 2)
+        
+        if song[criterion] == playlist[mid][criterion]:
+            print(f'found {song[criterion]} at playlist[{mid}]')
+            return True
+        
+        elif song[criterion] > playlist[mid][criterion]:
+            lower_bound = mid + 1
+            print(f'{song[criterion]} is bigger than {playlist[mid][criterion]}. Reducing search to the upper half.')
+        
+        else:
+            upper_bound = mid - 1
+            print(f'{song[criterion]} is smaller than {playlist[mid][criterion]}. Reducing search to the lower half.')
+        
+    return False
 
 def sort_playlist(playlist, criterion):
     """
