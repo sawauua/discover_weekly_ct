@@ -84,6 +84,19 @@ def song_in_playlist(playlist, criterion, song):
         
     return False
 
+def playlists(songs):
+    playlists = []
+    for i in range(100):
+        playlist = []
+        for j in range(50):
+            randsong = songs[random.randint(0,len(songs) - 1)]['title']
+            while randsong in playlist:
+                randsong = songs[random.randint(0,len(songs) - 1)]['title']
+            playlist.append(randsong)
+        playlists.append(playlist)
+            
+    return playlists
+
 def sort_playlist(playlist, criterion):
     """
     Sorts a playlist based on the given criterion. Criterion can be any key (title, artist, BPM, Speechiness etc.)
