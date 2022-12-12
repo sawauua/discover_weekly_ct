@@ -72,17 +72,17 @@ def song_in_playlist(playlist, criterion, song):
     while lower_bound <= upper_bound:
         mid = int((upper_bound + lower_bound) / 2)
         
-        if song[criterion] == playlist[mid][criterion]:
-            print(f'found {song[criterion]} at playlist[{mid}]')
+        if song == playlist[mid][criterion]:
+            print(f'found {song} at playlist[{mid}]')
             return True
         
-        elif song[criterion] > playlist[mid][criterion]:
+        elif song > playlist[mid][criterion]:
             lower_bound = mid + 1
-            print(f'{song[criterion]} is bigger than {playlist[mid][criterion]}. Reducing search to the upper half.')
+            print(f'{song} is bigger than {playlist[mid][criterion]}. Reducing search to the upper half.')
         
         else:
             upper_bound = mid - 1
-            print(f'{song[criterion]} is smaller than {playlist[mid][criterion]}. Reducing search to the lower half.')
+            print(f'{song} is smaller than {playlist[mid][criterion]}. Reducing search to the lower half.')
         
     return False
 
@@ -158,11 +158,15 @@ songs = read_dataset('spotify-dataset.csv')
 print('')
     
 # sortedp = sort_playlist(playlist1, 'title')
+# print(sortedp)
 # for i in range(len(sortedp)):
 #     print(sortedp[i]['title'])
 
+
+
 users = users2(3,songs)
-playlists_test = playlists(songs)
+playlists_100 = playlists(songs)
+
 
 def week1(user, playlists):
     yes = []
@@ -181,5 +185,5 @@ def week1(user, playlists):
     
     return recommendation
 
-print(week1(users['user2'], playlists_test))
-                    
+#print(week1(users['user2'], playlists_100))
+                
