@@ -147,6 +147,33 @@ def users2(n: int, songs: List[Dict[str,any]]) -> Dict[str, List[str]]:
         users[f'user{str(i)}'] = user_list
             
     return users
+
+def week2(user, playlists):
+    
+    #get 5 most listened-to genres
+    max_genres = {}
+    genres = count_genres(user)
+    for j in range(5):
+        top_val = 0
+        for i in genres:
+            if genres[i] > top_val:
+                top_val = genres[i]
+                top_genre = i
+        max_genres[top_genre] = top_val
+        if top_genre in genres:
+            genres.pop(top_genre)
+        
+    return max_genres
+                
+def count_genres(user):
+    genres_dict = {}
+    for song in user:
+        if song['genre'] in genres_dict:
+            genres_dict[song['genre']] += 1
+        else:
+            genres_dict[song['genre']] = 1
+        
+    return genres_dict
         
 #checking if the read_dataset method works
 songs = read_dataset('spotify-dataset.csv')
@@ -198,3 +225,7 @@ def week1(user, playlists):
 playlists_nonran = [songs[:10], songs[15:20], songs[30:45], songs[150:200], songs[367:370]]
 our_users['user_nonran'] = songs[25:400]
 print(week1(our_users['user_nonran'], playlists_nonran))
+
+#test count_genres function
+#print(count_genres(our_users['user_nonran']))                
+week2(our_users['user_nonran'], playlists_100)
