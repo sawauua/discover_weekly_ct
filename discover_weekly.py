@@ -161,6 +161,25 @@ print('')
 # for i in range(len(sortedp)):
 #     print(sortedp[i]['title'])
 
+users = users2(3,songs)
+playlists_test = playlists(songs)
 
-def week1():
-    pass
+def week1(user, playlists):
+    yes = []
+    no = []
+    recommendation = []
+    for song in user:
+        for playlist in playlists:
+            if song_in_playlist(playlist, 'title', song) == True:
+                yes.append(True)
+            else:
+                no.append(False)
+            while yes >= 3 and no >= 3:
+                for i in range(5):
+                    for j in range(random.randint(0, len(playlist))):
+                        recommendation.append(playlist[i])
+    
+    return recommendation
+
+print(week1(users['user2'], playlists_test))
+                    
