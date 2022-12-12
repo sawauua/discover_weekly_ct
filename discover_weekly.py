@@ -48,6 +48,10 @@ def read_dataset(path):
         #add the dictionary to the result list
         result.append(my_dict)
         
+        #convert song titles to strings in case they were converted to int in line 33
+        for i in range(len(result)):
+            result[i]['title'] = str(result[i]['title'])
+        
     return result
 
 def song_in_playlist(playlist, criterion, song):
