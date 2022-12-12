@@ -76,17 +76,17 @@ def song_in_playlist(playlist, criterion, song):
     while lower_bound <= upper_bound:
         mid = int((upper_bound + lower_bound) / 2)
         
-        if song == playlist[mid][criterion]:
-            print(f'found {song} at playlist[{mid}]')
+        if song[criterion] == playlist[mid][criterion]:
+            #print(f'found {song} at playlist[{mid}]')
             return True
         
-        elif song > playlist[mid][criterion]:
+        elif song[criterion] > playlist[mid][criterion]:
             lower_bound = mid + 1
-            print(f'{song} is bigger than {playlist[mid][criterion]}. Reducing search to the upper half.')
+            #print(f'{song} is bigger than {playlist[mid][criterion]}. Reducing search to the upper half.')
         
         else:
             upper_bound = mid - 1
-            print(f'{song} is smaller than {playlist[mid][criterion]}. Reducing search to the lower half.')
+            #print(f'{song} is smaller than {playlist[mid][criterion]}. Reducing search to the lower half.')
         
     return False
 
@@ -95,9 +95,9 @@ def playlists(songs):
     for i in range(100):
         playlist = []
         for j in range(50):
-            randsong = songs[random.randint(0,len(songs) - 1)]['title']
+            randsong = songs[random.randint(0,len(songs) - 1)]
             while randsong in playlist:
-                randsong = songs[random.randint(0,len(songs) - 1)]['title']
+                randsong = songs[random.randint(0,len(songs) - 1)]
             playlist.append(randsong)
         playlists.append(playlist)
             
@@ -133,7 +133,7 @@ def users(n, songs):
     for i in range(n):
         user_list = []
         for j in range(random.randint(0, len(songs)-1)):
-            user_list.append(songs[random.randint(0,len(songs) - 1)]['title'])
+            user_list.append(songs[random.randint(0,len(songs) - 1)])
         users.append(user_list)
             
     return users
@@ -143,7 +143,7 @@ def users2(n: int, songs: List[Dict[str,any]]) -> Dict[str, List[str]]:
     for i in range(1,n+1):
         user_list = []
         for j in range(random.randint(0, len(songs)-1)):
-            user_list.append(songs[random.randint(0,len(songs) - 1)]['title'])
+            user_list.append(songs[random.randint(0,len(songs) - 1)])
         users[f'user{str(i)}'] = user_list
             
     return users
@@ -155,39 +155,46 @@ songs = read_dataset('spotify-dataset.csv')
 
 
 #checking if the sort_playlist method works
-#playlist1 = [{'title': 'Hey,  Soul Sister', 'artist': 'Train', 'genre': 'neo mellow', 'year': 2010, 'BPM': 97, 'Energy': 89, 'Danceability': 67, 'Loudness': -4, 'Liveness': 8, 'Valence': 80, 'Length': 217, 'Acousticness': 19, 'Speechiness': 4, 'Popularity': 83}, {'title': 'Love The Way You Lie', 'artist': 'Eminem', 'genre': 'detroit hip hop', 'year': 2010, 'BPM': 87, 'Energy': 93, 'Danceability': 75, 'Loudness': -5, 'Liveness': 52, 'Valence': 64, 'Length': 263, 'Acousticness': 24, 'Speechiness': 23, 'Popularity': 82}, {'title': 'TiK ToK', 'artist': 'Kesha', 'genre': 'dance pop', 'year': 2010, 'BPM': 120, 'Energy': 84, 'Danceability': 76, 'Loudness': -3, 'Liveness': 29, 'Valence': 71, 'Length': 200, 'Acousticness': 10, 'Speechiness': 14, 'Popularity': 80}, {'title': 'Bad Romance', 'artist': 'Lady Gaga', 'genre': 'dance pop', 'year': 2010, 'BPM': 119, 'Energy': 92, 'Danceability': 70, 'Loudness': -4, 'Liveness': 8, 'Valence': 71, 'Length': 295, 'Acousticness': 0, 'Speechiness': 4, 'Popularity': 79}, {'title': 'Just the Way You Are', 'artist': 'Bruno Mars', 'genre': 'pop', 'year': 2010, 'BPM': 109, 'Energy': 84, 'Danceability': 64, 'Loudness': -5, 'Liveness': 9, 'Valence': 43, 'Length': 221, 'Acousticness': 2, 'Speechiness': 4, 'Popularity': 78}, {'title': 'Baby', 'artist': 'Justin Bieber', 'genre': 'canadian pop', 'year': 2010, 'BPM': 65, 'Energy': 86, 'Danceability': 73, 'Loudness': -5, 'Liveness': 11, 'Valence': 54, 'Length': 214, 'Acousticness': 4, 'Speechiness': 14, 'Popularity': 77}, {'title': 'Dynamite', 'artist': 'Taio Cruz', 'genre': 'dance pop', 'year': 2010, 'BPM': 120, 'Energy': 78, 'Danceability': 75, 'Loudness': -4, 'Liveness': 4, 'Valence': 82, 'Length': 203, 'Acousticness': 0, 'Speechiness': 9, 'Popularity': 77}, {'title': 'Secrets', 'artist': 'OneRepublic', 'genre': 'dance pop', 'year': 2010, 'BPM': 148, 'Energy': 76, 'Danceability': 52, 'Loudness': -6, 'Liveness': 12, 'Valence': 38, 'Length': 225, 'Acousticness': 7, 'Speechiness': 4, 'Popularity': 77}, {'title': 'Empire State of Mind (Part II) Broken Down', 'artist': 'Alicia Keys', 'genre': 'hip pop', 'year': 2010, 'BPM': 93, 'Energy': 37, 'Danceability': 48, 'Loudness': -8, 'Liveness': 12, 'Valence': 14, 'Length': 216, 'Acousticness': 74, 'Speechiness': 3, 'Popularity': 76}]
-# for i in range(len(playlist1)):
-#     print(playlist1[i]['title'])
-    
-print('')
-    
-# sortedp = sort_playlist(playlist1, 'title')
-# print(sortedp)
-# for i in range(len(sortedp)):
-#     print(sortedp[i]['title'])
+"""playlist1 = [{'title': 'Hey,  Soul Sister', 'artist': 'Train', 'genre': 'neo mellow', 'year': 2010, 'BPM': 97, 'Energy': 89, 'Danceability': 67, 'Loudness': -4, 'Liveness': 8, 'Valence': 80, 'Length': 217, 'Acousticness': 19, 'Speechiness': 4, 'Popularity': 83}, {'title': 'Love The Way You Lie', 'artist': 'Eminem', 'genre': 'detroit hip hop', 'year': 2010, 'BPM': 87, 'Energy': 93, 'Danceability': 75, 'Loudness': -5, 'Liveness': 52, 'Valence': 64, 'Length': 263, 'Acousticness': 24, 'Speechiness': 23, 'Popularity': 82}, {'title': 'TiK ToK', 'artist': 'Kesha', 'genre': 'dance pop', 'year': 2010, 'BPM': 120, 'Energy': 84, 'Danceability': 76, 'Loudness': -3, 'Liveness': 29, 'Valence': 71, 'Length': 200, 'Acousticness': 10, 'Speechiness': 14, 'Popularity': 80}, {'title': 'Bad Romance', 'artist': 'Lady Gaga', 'genre': 'dance pop', 'year': 2010, 'BPM': 119, 'Energy': 92, 'Danceability': 70, 'Loudness': -4, 'Liveness': 8, 'Valence': 71, 'Length': 295, 'Acousticness': 0, 'Speechiness': 4, 'Popularity': 79}, {'title': 'Just the Way You Are', 'artist': 'Bruno Mars', 'genre': 'pop', 'year': 2010, 'BPM': 109, 'Energy': 84, 'Danceability': 64, 'Loudness': -5, 'Liveness': 9, 'Valence': 43, 'Length': 221, 'Acousticness': 2, 'Speechiness': 4, 'Popularity': 78}, {'title': 'Baby', 'artist': 'Justin Bieber', 'genre': 'canadian pop', 'year': 2010, 'BPM': 65, 'Energy': 86, 'Danceability': 73, 'Loudness': -5, 'Liveness': 11, 'Valence': 54, 'Length': 214, 'Acousticness': 4, 'Speechiness': 14, 'Popularity': 77}, {'title': 'Dynamite', 'artist': 'Taio Cruz', 'genre': 'dance pop', 'year': 2010, 'BPM': 120, 'Energy': 78, 'Danceability': 75, 'Loudness': -4, 'Liveness': 4, 'Valence': 82, 'Length': 203, 'Acousticness': 0, 'Speechiness': 9, 'Popularity': 77}, {'title': 'Secrets', 'artist': 'OneRepublic', 'genre': 'dance pop', 'year': 2010, 'BPM': 148, 'Energy': 76, 'Danceability': 52, 'Loudness': -6, 'Liveness': 12, 'Valence': 38, 'Length': 225, 'Acousticness': 7, 'Speechiness': 4, 'Popularity': 77}, {'title': 'Empire State of Mind (Part II) Broken Down', 'artist': 'Alicia Keys', 'genre': 'hip pop', 'year': 2010, 'BPM': 93, 'Energy': 37, 'Danceability': 48, 'Loudness': -8, 'Liveness': 12, 'Valence': 14, 'Length': 216, 'Acousticness': 74, 'Speechiness': 3, 'Popularity': 76}]
+for i in range(len(playlist1)):
+     print(playlist1[i]['title'])  
+print('')   
+sortedp = sort_playlist(playlist1, 'title')
+print(sortedp)
+for i in range(len(sortedp)):
+    print(sortedp[i]['title'])"""
 
 
 
-users = users2(3,songs)
+our_users = users2(3,songs)
 playlists_100 = playlists(songs)
-
+#print titles of user1's songs
+"""print(our_users['user1'])
+for i in our_users:
+    for j in range(len(i)):
+        print(our_users[f'{i}'][j]['title'])"""
 
 def week1(user, playlists):
-    yes = []
-    no = []
+    yes = 0
     recommendation = []
-    for song in user:
-        for playlist in playlists:
-            if song_in_playlist(playlist, 'title', song) == True:
-                yes.append(True)
-            else:
-                no.append(False)
-            while yes >= 3 and no >= 3:
-                for i in range(5):
-                    for j in range(random.randint(0, len(playlist))):
-                        recommendation.append(playlist[i])
+    for playlist in playlists:
+        for song in user:
+            if song_in_playlist(playlist, 'title', song):
+                print(song['title'])
+                yes += 1
+            if yes >= 3:
+                while len(recommendation) < 5:
+                    discover_song = playlist[random.randint(0, len(playlist) - 1)]
+                    if discover_song not in recommendation:
+                        recommendation.append(playlist[random.randint(0, len(playlist) - 1)])
+                return recommendation
     
-    return recommendation
+    return 'no match found'
 
+#print random week1 function output
 #print(week1(users['user2'], playlists_100))
                 
+#create a non-random list of playlists and a user to check week1 funtion
+playlists_nonran = [songs[:10], songs[15:20], songs[30:45], songs[150:200], songs[367:370]]
+our_users['user_nonran'] = songs[25:400]
+print(week1(our_users['user_nonran'], playlists_nonran))
