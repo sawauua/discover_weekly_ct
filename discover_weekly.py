@@ -5,6 +5,7 @@ Created on Sat Dec 10 18:55:02 2022
 """
 from typing import List, Dict
 import random
+import csv
 
 def read_dataset(path):
     """
@@ -50,6 +51,36 @@ def read_dataset(path):
         
     return result
 
+#-----------------------------------------------------------------------------------------------------------------------------------
+
+def read_dataset2(path: str) -> List[Dict[str, any]]:
+
+    with open(path) as infile:
+        reader = csv.DictReader(infile)
+        result = []
+        for row in reader:
+            out_dict = {}
+            for field in reader.fieldnames:
+                if field == 'title':
+                    out_dict[field] = row[field]
+                else:
+                    out_dict[field] = clean_data(row[field])
+            result.append(out_dict)
+        return result
+
+def clean_data(number):
+    try:
+        return int(number)
+    except ValueError:
+        return number
+
+songs2 = read_dataset2('spotify-dataset.csv')
+# for i in range(len(songs2)):
+#     print(songs2[i]['title'])
+
+#---------------------------------------------------------------------------------------------------------------------------------
+
+
 def song_in_playlist(playlist, criterion, song):
     """
     Looks for a specifc song (by criterion) in a playlist.
@@ -91,9 +122,9 @@ def playlists(songs):
     for i in range(100):
         playlist = []
         for j in range(50):
-            randsong = songs[random.randint(0,len(songs) - 1)]['title']
+            randsong = songs[random.randint(0,len(songs) - 1)]
             while randsong in playlist:
-                randsong = songs[random.randint(0,len(songs) - 1)]['title']
+                randsong = songs[random.randint(0,len(songs) - 1)]
             playlist.append(randsong)
         playlists.append(playlist)
             
@@ -151,11 +182,13 @@ songs = read_dataset('spotify-dataset.csv')
 
 
 #checking if the sort_playlist method works
-#playlist1 = [{'title': 'Hey,  Soul Sister', 'artist': 'Train', 'genre': 'neo mellow', 'year': 2010, 'BPM': 97, 'Energy': 89, 'Danceability': 67, 'Loudness': -4, 'Liveness': 8, 'Valence': 80, 'Length': 217, 'Acousticness': 19, 'Speechiness': 4, 'Popularity': 83}, {'title': 'Love The Way You Lie', 'artist': 'Eminem', 'genre': 'detroit hip hop', 'year': 2010, 'BPM': 87, 'Energy': 93, 'Danceability': 75, 'Loudness': -5, 'Liveness': 52, 'Valence': 64, 'Length': 263, 'Acousticness': 24, 'Speechiness': 23, 'Popularity': 82}, {'title': 'TiK ToK', 'artist': 'Kesha', 'genre': 'dance pop', 'year': 2010, 'BPM': 120, 'Energy': 84, 'Danceability': 76, 'Loudness': -3, 'Liveness': 29, 'Valence': 71, 'Length': 200, 'Acousticness': 10, 'Speechiness': 14, 'Popularity': 80}, {'title': 'Bad Romance', 'artist': 'Lady Gaga', 'genre': 'dance pop', 'year': 2010, 'BPM': 119, 'Energy': 92, 'Danceability': 70, 'Loudness': -4, 'Liveness': 8, 'Valence': 71, 'Length': 295, 'Acousticness': 0, 'Speechiness': 4, 'Popularity': 79}, {'title': 'Just the Way You Are', 'artist': 'Bruno Mars', 'genre': 'pop', 'year': 2010, 'BPM': 109, 'Energy': 84, 'Danceability': 64, 'Loudness': -5, 'Liveness': 9, 'Valence': 43, 'Length': 221, 'Acousticness': 2, 'Speechiness': 4, 'Popularity': 78}, {'title': 'Baby', 'artist': 'Justin Bieber', 'genre': 'canadian pop', 'year': 2010, 'BPM': 65, 'Energy': 86, 'Danceability': 73, 'Loudness': -5, 'Liveness': 11, 'Valence': 54, 'Length': 214, 'Acousticness': 4, 'Speechiness': 14, 'Popularity': 77}, {'title': 'Dynamite', 'artist': 'Taio Cruz', 'genre': 'dance pop', 'year': 2010, 'BPM': 120, 'Energy': 78, 'Danceability': 75, 'Loudness': -4, 'Liveness': 4, 'Valence': 82, 'Length': 203, 'Acousticness': 0, 'Speechiness': 9, 'Popularity': 77}, {'title': 'Secrets', 'artist': 'OneRepublic', 'genre': 'dance pop', 'year': 2010, 'BPM': 148, 'Energy': 76, 'Danceability': 52, 'Loudness': -6, 'Liveness': 12, 'Valence': 38, 'Length': 225, 'Acousticness': 7, 'Speechiness': 4, 'Popularity': 77}, {'title': 'Empire State of Mind (Part II) Broken Down', 'artist': 'Alicia Keys', 'genre': 'hip pop', 'year': 2010, 'BPM': 93, 'Energy': 37, 'Danceability': 48, 'Loudness': -8, 'Liveness': 12, 'Valence': 14, 'Length': 216, 'Acousticness': 74, 'Speechiness': 3, 'Popularity': 76}]
+playlist1 = [{'title': 'Hey,  Soul Sister', 'artist': 'Train', 'genre': 'neo mellow', 'year': 2010, 'BPM': 97, 'Energy': 89, 'Danceability': 67, 'Loudness': -4, 'Liveness': 8, 'Valence': 80, 'Length': 217, 'Acousticness': 19, 'Speechiness': 4, 'Popularity': 83}, {'title': 'Love The Way You Lie', 'artist': 'Eminem', 'genre': 'detroit hip hop', 'year': 2010, 'BPM': 87, 'Energy': 93, 'Danceability': 75, 'Loudness': -5, 'Liveness': 52, 'Valence': 64, 'Length': 263, 'Acousticness': 24, 'Speechiness': 23, 'Popularity': 82}, {'title': 'TiK ToK', 'artist': 'Kesha', 'genre': 'dance pop', 'year': 2010, 'BPM': 120, 'Energy': 84, 'Danceability': 76, 'Loudness': -3, 'Liveness': 29, 'Valence': 71, 'Length': 200, 'Acousticness': 10, 'Speechiness': 14, 'Popularity': 80}, {'title': 'Bad Romance', 'artist': 'Lady Gaga', 'genre': 'dance pop', 'year': 2010, 'BPM': 119, 'Energy': 92, 'Danceability': 70, 'Loudness': -4, 'Liveness': 8, 'Valence': 71, 'Length': 295, 'Acousticness': 0, 'Speechiness': 4, 'Popularity': 79}, {'title': 'Just the Way You Are', 'artist': 'Bruno Mars', 'genre': 'pop', 'year': 2010, 'BPM': 109, 'Energy': 84, 'Danceability': 64, 'Loudness': -5, 'Liveness': 9, 'Valence': 43, 'Length': 221, 'Acousticness': 2, 'Speechiness': 4, 'Popularity': 78}, {'title': 'Baby', 'artist': 'Justin Bieber', 'genre': 'canadian pop', 'year': 2010, 'BPM': 65, 'Energy': 86, 'Danceability': 73, 'Loudness': -5, 'Liveness': 11, 'Valence': 54, 'Length': 214, 'Acousticness': 4, 'Speechiness': 14, 'Popularity': 77}, {'title': 'Dynamite', 'artist': 'Taio Cruz', 'genre': 'dance pop', 'year': 2010, 'BPM': 120, 'Energy': 78, 'Danceability': 75, 'Loudness': -4, 'Liveness': 4, 'Valence': 82, 'Length': 203, 'Acousticness': 0, 'Speechiness': 9, 'Popularity': 77}, {'title': 'Secrets', 'artist': 'OneRepublic', 'genre': 'dance pop', 'year': 2010, 'BPM': 148, 'Energy': 76, 'Danceability': 52, 'Loudness': -6, 'Liveness': 12, 'Valence': 38, 'Length': 225, 'Acousticness': 7, 'Speechiness': 4, 'Popularity': 77}, {'title': 'Empire State of Mind (Part II) Broken Down', 'artist': 'Alicia Keys', 'genre': 'hip pop', 'year': 2010, 'BPM': 93, 'Energy': 37, 'Danceability': 48, 'Loudness': -8, 'Liveness': 12, 'Valence': 14, 'Length': 216, 'Acousticness': 74, 'Speechiness': 3, 'Popularity': 76}]
 # for i in range(len(playlist1)):
 #     print(playlist1[i]['title'])
     
 print('')
+
+
     
 # sortedp = sort_playlist(playlist1, 'title')
 # print(sortedp)
@@ -165,7 +198,7 @@ print('')
 
 
 users = users2(3,songs)
-playlists_100 = playlists(songs)
+playlists_100 = playlists(songs2)
 
 
 def week1(user, playlists):
@@ -178,12 +211,15 @@ def week1(user, playlists):
                 yes.append(True)
             else:
                 no.append(False)
-            while yes >= 3 and no >= 3:
+            
+            # this is where i'm struggling wit, idk how to include the condition
+            while len(yes) >= 3 and len(no) >= 3:
                 for i in range(5):
                     for j in range(random.randint(0, len(playlist))):
                         recommendation.append(playlist[i])
     
     return recommendation
 
-#print(week1(users['user2'], playlists_100))
+
+print(week1(users['user2'], playlists_100))
                 
