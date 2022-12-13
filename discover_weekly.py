@@ -218,6 +218,16 @@ def week1(user, playlists):
     
     return 'no match found'
 
+#sorting genres: there are many genres and it's hard to classify all of them without hardcoding.
+#for example, british soul should rather be its own genre. after some gogling we classfied the ambigous genres as follows:
+three_genres = {'rock': ['neo mellow', 'british soul', 'permanent wave', 'alaska indie', 'alternative r&b'], 'techno' : ['big room', 'electro', 'complextro', 'house', 'tropical house','belgian edm', 'electronic trap', 'electro house', 'downtempo', 'edm'], 'pop': ['boy band', 'canadian hip hop', 'chicago rap', 'australian hip hop', 'australian dance', 'hollywood', 'canadian contemporary r&b', 'irish singer-songwriter', 'hip hop', 'latin', 'canadian latin', 'brostep', 'contemporary country', 'escape room']}
+genres = list(count_genres(songs).keys())
+for element in genres:
+    if 'pop' in element:
+        three_genres['pop'].append(element)
+    elif 'rock' in element:
+        three_genres['rock'].append(element)
+
 #print random week1 function output
 #print(week1(users['user2'], playlists_100))
                 
